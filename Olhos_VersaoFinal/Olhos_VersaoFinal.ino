@@ -32,7 +32,7 @@ int palpe_bd = 3;  // Servo para controlar a pálpebra inferior direita
 int Yarm = 4;      // Servo para controlar o movimento da íris no eixo Y
 int Xarm = 5;      // Servo para controlar o movimento da íris no eixo X
  
- 
+int delayTime = 10;
  
 //================== FUNÇÃO PRINCIPAL ================== 
 void setup() {
@@ -121,18 +121,18 @@ void loop() {
 //==================== FUNÇÕES PARA CONTROLAR OS OLHOS ==================
 // Função para abrir os olhos
 void open_eye() {
-  servos.setPWM(palpe_ce,0,155);  // Ângulo de abertura para pálpebra superior esquerda
-  servos.setPWM(palpe_be,0,550);  // Ângulo de abertura para pálpebra inferior esquerda
-  servos.setPWM(palpe_cd,0,250);  // Ângulo de abertura para pálpebra superior direita 68GRAUS
-  servos.setPWM(palpe_bd,0,300); // Ângulo de abertura para pálpebra inferior direita 40GRAUS
+  smoothMove(palpe_ce,265,155);  // Ângulo de abertura para pálpebra superior esquerda
+  smoothMove(palpe_be,275,550);  // Ângulo de abertura para pálpebra inferior esquerda
+  smoothMove(palpe_cd,150,250);  // Ângulo de abertura para pálpebra superior direita 68GRAUS
+  smoothMove(palpe_bd,500,300); // Ângulo de abertura para pálpebra inferior direita 40GRAUS
 }
  
 // Função para fechar os olhos
 void close_eye() {
-  servos.setPWM(palpe_ce,0,265); // Ângulo de fechamento para pálpebra superior esquerda 46GRAUS
-  servos.setPWM(palpe_be,0,275); // Ângulo de fechamento para pálpebra inferior esquerda 50GRAUS
-  servos.setPWM(palpe_bd,0,500);   // Ângulo de fechamento para pálpebra inferior direita 132GRAUS
-  servos.setPWM(palpe_cd,0,150);   // Ângulo de fechamento para pálpebra superior direita 0GRAUS
+  smoothMove(palpe_ce,155,265); // Ângulo de fechamento para pálpebra superior esquerda 46GRAUS
+  smoothMove(palpe_be,550,275); // Ângulo de fechamento para pálpebra inferior esquerda 50GRAUS
+  smoothMove(palpe_bd,300,500);   // Ângulo de fechamento para pálpebra inferior direita 132GRAUS
+  smoothMove(palpe_cd,250,150);   // Ângulo de fechamento para pálpebra superior direita 0GRAUS
   
 }
  
@@ -144,12 +144,12 @@ void eye_ball_centert() {
 //Função que pisca somente o olho esquerdo
 void pisca_esq (){
   //fecha
-  servos.setPWM(palpe_ce,0,265); // Ângulo de fechamento para pálpebra superior esquerda
-  servos.setPWM(palpe_be,0,287.5); // Ângulo de fechamento para pálpebra inferior esquerda
+  smoothMove(palpe_ce,155,265); // Ângulo de fechamento para pálpebra superior esquerda
+  smoothMove(palpe_be,550,275); // Ângulo de fechamento para pálpebra inferior esquerda(estava 287.5)
   delay(500);
   //abre
-  servos.setPWM(palpe_ce,0,155);  // Ângulo de abertura para pálpebra superior esquerda
-  servos.setPWM(palpe_be,0,550);  // Ângulo de abertura para pálpebra inferior esquerda
+  smoothMove(palpe_ce,265,155);  // Ângulo de abertura para pálpebra superior esquerda
+  smoothMove(palpe_be,275,550);  // Ângulo de abertura para pálpebra inferior esquerda
 }
  
  
@@ -161,6 +161,20 @@ void angu_ticks(int servo, int angulo, int anguloMin , int anguloMax , int pwmMi
   // Aplica o valor calculado para o canal específico do servo (por exemplo, o canal 5)
   servos.setPWM(servo, 0, valorTicks);  // Move o servo para o valor correspondente de ticks
 }
- 
+//=================== FUNCAO DE MOVIMENTAÇÃO SUAVE ===============(em teste)
+void smoothMove(int servo, int startAngle, int endAngle) {
+  if (startAngle < endAngle) {
+    for (int angle = startAngle; angle <= endAngle; angle++) {
+      servos.setPWM(servo,0,angle);//sobe gradativamente o valor do angulo
+      delay(delayTime);
+    }
+  } else {
+    for (int angle = startAngle; angle >= endAngle; angle--) {
+      servos.setPWM(servo,0,angle);//desce gradativamente o valor do angulo
+      delay(delayTime);
+    }
+  }
+}
+
  
 //================== FIM DO PROGRAMA==================
