@@ -1,17 +1,4 @@
-/*
-* OBSERVAÇÕES:
-*  é necessário arrumar um modo de descobrir se o ângulo para fechar o olho esta correto, pois, se não estiver, acredito que há perigo de forçar demais os servos e 
-*  as palpebras do olho e acabar quebrando algo
-*  
-*  SEMPRE CONECTE O RX NO PINO 3 E O TX NO PINO 2
-* 
-*  NÃO CONECTE COM O BLUETOOTH DO CEL, VÁ DIRETO AO APP E CONECTE POR LÁ! CASO ESTEJA PAREADO COLOQUE PARA ESQUECER.
-*  
-*  ACREDITO QUE FECHAR E ABRIR OS OLHOS ESTEJA EXIGINDO MUITA ENERGIA. POR ESTE MOTIVO O BLUETOOTH SOFRE UM RESET ACIDENTAL E DESCONECTA
-*  
-*  
-*  SE TUDO DER ERRADO VERIFIQUE SE AS BIBLIOTECAS ESTÃO ATUALIZADAS
-*/
+
 #include <Dabble.h>
 #include <Adafruit_PWMServoDriver.h>  // Importa a biblioteca para controlar servos
 #include <Wire.h>
@@ -97,8 +84,6 @@ void loop() {
  
 //===========================MOVIMENTACAO EIXO X ==========================
 // converte o valor do gamepad pra angulo do servo
- 
- 
   if ( eixox!=0) {
      int valorformatx = map(eixox,-7,7,36,164); //map do gamepad usando os limites do servo
      angu_ticks(Xarm,valorformatx,36,164,240,560);
@@ -115,8 +100,6 @@ void loop() {
      
   }
 }
- 
- 
  
 //==================== FUNÇÕES PARA CONTROLAR OS OLHOS ==================
 // Função para abrir os olhos

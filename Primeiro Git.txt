@@ -1,2 +1,2 @@
-Este prjeto foi feito com o intuito de entender como funciona o git e o github.
+Este projeto foi feito com o intuito de entender como funciona o git e o github.
 Fiz a alteração de movimentação suave nos olhos, porém ainda é necessário testar a lógica.
